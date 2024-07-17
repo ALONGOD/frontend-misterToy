@@ -29,7 +29,7 @@ export function App() {
               <Route element={<ToyDetails />} path="/toy/:toyId" />
             </Routes>
           </main>
-          <AppFooter />
+          {/* <AppFooter /> */}
         </section>
       </Router>
       <UserMsg />

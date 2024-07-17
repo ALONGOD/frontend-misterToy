@@ -1,8 +1,32 @@
 .home-page {
-  display: flex;
-  justify-content: center;
+  text-align: center;
+  padding: 20px;
 }
 
-.home-page img {
-  max-height: 700px;
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.content h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.content p {
+  font-size: 1rem;
+  color: #666;
 }

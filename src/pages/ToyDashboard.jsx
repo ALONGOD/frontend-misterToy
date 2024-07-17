@@ -107,7 +107,6 @@ export function ToyDashboard() {
 
   return (
     <section className="toy-dashboard">
-      <div>Hi from dashboard</div>
       <div className='small'>
         <Pie data={priceData} />
       </div>
