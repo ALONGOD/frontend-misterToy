@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { FormControl, InputLabel, MenuItem, Select, Checkbox, FormControlLabel } from '@mui/material'
 
 export function ToySort({ sortBy, onSetSort }) {
   const [sortByToEdit, setSortByToEdit] = useState({ ...sortBy })
@@ -16,23 +17,40 @@ export function ToySort({ sortBy, onSetSort }) {
     }))
   }
 
+  function handleCheckboxChange(event) {
+    const { checked } = event.target
+    setSortByToEdit(prevSort => ({
+      ...prevSort,
+      desc: checked ? -1 : 1,
+    }))
+  }
+
   return (
     <form className="toy-sort">
-      <select name="type" value={sortByToEdit.type} onChange={handleChange}>
-        <option value="">Sort by</option>
-        <option value="name">Name</option>
-        <option value="price">Price</option>
-        <option value="createdAt">Date</option>
-      </select>
-      <label>
-        <input
-          type="checkbox"
-          name="desc"
-          checked={sortByToEdit.desc < 0}
+      <FormControl fullWidth margin="normal">
+        <InputLabel>Sort by</InputLabel>
+        <Select
+          name="type"
+          value={sortByToEdit.type}
           onChange={handleChange}
-        />
-        Descending
-      </label>
+          label="Sort by"
+        >
+          <MenuItem value=""><em>None</em></MenuItem>
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="price">Price</MenuItem>
+          <MenuItem value="createdAt">Date</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControlLabel
+        control={
+          <Checkbox
+            name="desc"
+            checked={sortByToEdit.desc < 0}
+            onChange={handleCheckboxChange}
+          />
+        }
+        label="Descending"
+      />
     </form>
   )
 }
