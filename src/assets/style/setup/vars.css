@@ -1,13 +1,22 @@
 :root {
-  --clr1: #ff6b6b;
-  --clr2: #52b69a;
+  --clr1: #4a90e2;
+  /* Cool Blue */
+  --clr2: #50e3c2;
+  /* Cool Green */
 
-  --clr1bg: #f2f3f7;
-  --clr1bg-light: #ffffff;
-  --clr2bg: #ffd56b;
-  --clr2bg-light: #f9f3e3;
+  --clr1bg: #e1f5fe;
+  /* Light Cool Blue */
+  --clr1bg-light: #f5fafd;
+  /* Very Light Cool Blue */
+  --clr2bg: #d4f8e8;
+  /* Light Cool Green */
+  --clr2bg-light: #f3fdf8;
+  /* Very Light Cool Green */
 
-  --gray1: rgb(240, 240, 240);
-  --gray2: rgb(155, 155, 155);
-  --gray3: rgb(44, 44, 44);
+  --gray1: #f0f4f8;
+  /* Light Gray */
+  --gray2: #95a5a6;
+  /* Medium Gray */
+  --gray3: #2c3e50;
+  /* Dark Gray */
 }

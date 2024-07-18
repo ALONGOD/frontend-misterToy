@@ -19,9 +19,9 @@
   justify-content: space-around;
   max-width: 250px;
   margin: 0.5em;
-  background-color: var(--clr1bg);
-  border-radius: 4px;
-  box-shadow: #00000026 1.95px 1.95px 2.6px;
+  /* background-color: var(--clr1bg); */
+  /* border-radius: 4px;
+  box-shadow: #00000026 1.95px 1.95px 2.6px; */
 }
 
 .green {

@@ -1,12 +1,8 @@
-export function Loader({ text = 'Loading, please wait...' }) {
+export function Loader({ text = 'Loading...' }) {
   return (
-    <section className="loader-container">
-      <div className="animation">
-        <span></span>
-        <span className="dot2"></span>
-        <span></span>
-      </div>
+    <div className="loader-container">
+      <div className="spinner"></div>
       <p>{text}</p>
-    </section>
-  )
+    </div>
+  );
 }

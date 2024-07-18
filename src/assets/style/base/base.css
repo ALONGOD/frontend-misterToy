@@ -42,9 +42,9 @@ object {
   outline: 1px solid gold;
 }
 
-a.active {
-  text-decoration: overline;
-}
+/* a.active { */
+/* text-decoration: overline; */
+/* } */
 
 .popup-menu {
   position: fixed;
@@ -61,6 +61,7 @@ a.active {
   margin: auto;
   height: fit-content;
 }
+
 .popup-menu h1 {
   font-size: 1.5em;
 }

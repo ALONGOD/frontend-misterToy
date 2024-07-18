@@ -1,29 +1,36 @@
 .toy-preview {
-  padding: 1em;
-  font-size: 1.2rem;
+  padding: 0.5em;
+  /* Reduced padding */
+  font-size: 1rem;
+  /* Reduced font size */
 }
 
 .toy-preview .toy-name {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  /* Reduced font size */
 }
 
 .toy-preview img {
-  max-height: 220px;
+  max-height: 180px;
+  /* Reduced max height */
 }
 
-.skeleton-loader {
-  width: 220px;
-  height: 220px;
-  background: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-  background-size: 200% 100%;
-  animation: shimmer-loading 1.5s infinite linear;
-}
+/* .skeleton-loader { */
+/* width: 180px; */
+/* Reduced width */
+/* height: 180px; */
+/* Reduced height */
+/* background: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%); */
+/* background-size: 200% 100%; */
+/* animation: shimmer-loading 1.5s infinite linear; */
+/* } */
 
-@keyframes shimmer-loading {
+/* @keyframes shimmer-loading {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
-}
+} */

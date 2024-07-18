@@ -7,6 +7,7 @@ export function ToyPreview({ toy }) {
   function handleImageLoad() {
     setImgLoading(false)
   }
+  const toyImageUrl = `https://target.scene7.com/is/image/Target/GUEST_65ecb462-c4ed-4efc-9ec1-fd9a015ebe36?wid=488&hei=488&fmt=pjpeg`;
   return (
     <Link to={`/toy/${toy._id}`}>
       <article className="toy-preview">
@@ -14,8 +15,7 @@ export function ToyPreview({ toy }) {
         {isImgLoading && <div className="skeleton-loader"></div>}
         <div className="img-container">
           <img
-            src={`https://robohash.org/${toy.name}?set=set4`}
-            alt={toy.name}
+            src={toyImageUrl} alt={toy.name}
             onLoad={handleImageLoad}
             style={{ display: isImgLoading ? 'none' : 'block' }}
           />
