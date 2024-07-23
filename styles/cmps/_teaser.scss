@@ -1,0 +1,15 @@
+.teaser {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    img {
+        margin-bottom: rem(50px);
+        padding: 0 22%;
+    }
+
+    &-center {
+        align-self: center;
+    }
+}

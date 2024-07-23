@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import '../src/assets/style/main.css'
+// import '../src/assets/style/main.css'
 
 import { store } from './store/store'
 import { UserMsg } from './cmps/UserMsg'
