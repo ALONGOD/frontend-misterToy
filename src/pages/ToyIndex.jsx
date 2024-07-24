@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Button } from '@mui/material';
 
 import { Loader } from '../cmps/Loader'
 import { PaginationButtons } from '../cmps/PaginationButtons'
@@ -54,9 +55,9 @@ export function ToyIndex() {
         onSetSort={onSetSort}
       />
       <div style={{ marginBlockStart: '0.5em', textAlign: 'center' }}>
-        <button style={{ marginInline: 0 }}>
+        <Button variant="contained" style={{ marginInline: 0 }}>
           <Link to="/toy/edit">Add Toy</Link>
-        </button>
+        </Button>
       </div>
       {isLoading && <Loader />}
       {!isLoading && <ToyList toys={toys} onRemoveToy={onRemoveToy} />}
