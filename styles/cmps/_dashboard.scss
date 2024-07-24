@@ -1,0 +1,11 @@
+.toy-dashboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .chart-container {
+        width: 300px;
+        height: 300px;
+    }
+}
