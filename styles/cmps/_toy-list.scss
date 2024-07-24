@@ -1,0 +1,50 @@
+.toy-list {
+    display: flex;
+    justify-content: center;
+
+    ul {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 1em;
+        min-height: 445px;
+        margin-block: 0 0.5em;
+        list-style: none;
+        padding: 0;
+
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        max-width: 150px;
+        margin: 0.5em;
+
+        span {
+            font-size: 25px;
+            color: white;
+        }
+
+    }
+}
+
+.pagination {
+    background-color: var(--clr1);
+    color: var(--clr1bg);
+    padding: 1em;
+    text-align: center;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+@media (min-width: 630px) {
+    .toy-list ul {
+        flex-flow: row wrap;
+    }
+}

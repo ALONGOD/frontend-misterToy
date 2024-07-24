@@ -11,7 +11,7 @@ export function ToyPreview({ toy }) {
   return (
     <Link to={`/toy/${toy._id}`}>
       <article className="toy-preview">
-        <h1 className="toy-name">{toy.name}</h1>
+        <h3 className="toy-name">{toy.name}</h3>
         {isImgLoading && <div className="skeleton-loader"></div>}
         <div className="img-container">
           <img
@@ -20,10 +20,10 @@ export function ToyPreview({ toy }) {
             style={{ display: isImgLoading ? 'none' : 'block' }}
           />
         </div>
-        <h1>Price: ${toy.price}</h1>
-        <h1 className={toy.inStock ? 'green' : 'red'}>
+        <span>Price: ${toy.price}</span>
+        <h2 className={toy.inStock ? 'green' : 'red'}>
           {toy.inStock ? 'In stock' : 'Not in stock'}
-        </h1>
+        </h2>
       </article>
     </Link>
   )
