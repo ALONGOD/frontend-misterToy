@@ -2,41 +2,55 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
 import React, { useState } from "react";
 
-
-// const { useState } = React
-
 export function LoginSignup({ onSetUser }) {
 
     const [isSignup, setIsSignUp] = useState(false)
     const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
+    const [error, setError] = useState('')
 
     function handleChange({ target }) {
         const { name: field, value } = target
         setCredentials(prevCreds => ({ ...prevCreds, [field]: value }))
     }
 
-    function handleSubmit(ev) {
+    async function handleSubmit(ev) {
         ev.preventDefault()
-        onLogin(credentials)
+        try {
+            await onLogin(credentials)
+            setError('') // Clear any previous error message
+        } catch (err) {
+            setError('Oops, something went wrong. Please try again.')
+        }
     }
 
-
-    function onLogin(credentials) {
-        isSignup ? signup(credentials) : login(credentials)
+    async function onLogin(credentials) {
+        if (isSignup) {
+            await signup(credentials)
+        } else {
+            await login(credentials)
+        }
     }
 
-    function login(credentials) {
-        userService.login(credentials)
-            .then(onSetUser)
-            .then(() => { showSuccessMsg('Logged in successfully') })
-            .catch((err) => { showErrorMsg('Oops try again') })
+    async function login(credentials) {
+        try {
+            await userService.login(credentials)
+            onSetUser()
+            showSuccessMsg('Logged in successfully')
+        } catch (err) {
+            showErrorMsg('Login failed. Please try again.')
+            throw err // Re-throw error to be caught by handleSubmit
+        }
     }
 
-    function signup(credentials) {
-        userService.signup(credentials)
-            .then(onSetUser)
-            .then(() => { showSuccessMsg('Signed in successfully') })
-            .catch((err) => { showErrorMsg('Oops try again') })
+    async function signup(credentials) {
+        try {
+            await userService.signup(credentials)
+            onSetUser()
+            showSuccessMsg('Signed up successfully')
+        } catch (err) {
+            showErrorMsg('Signup failed. Please try again.')
+            throw err // Re-throw error to be caught by handleSubmit
+        }
     }
 
     return (
@@ -71,8 +85,13 @@ export function LoginSignup({ onSetUser }) {
                 <button>{isSignup ? 'Signup' : 'Login'}</button>
             </form>
 
+            {error && <div className="error-msg">{error}</div>}
+
             <div className="btns">
-                <a href="#" onClick={() => setIsSignUp(!isSignup)}>
+                <a href="#" onClick={(ev) => {
+                    ev.preventDefault()
+                    setIsSignUp(!isSignup)
+                }}>
                     {isSignup ?
                         'Already a member? Login' :
                         'New user? Signup here'
