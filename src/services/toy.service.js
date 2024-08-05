@@ -25,6 +25,7 @@ export const toyService = {
   getDefaultFilter,
   getDefaultSort,
   getToyLabels,
+  addMessage
 }
 
 function query(filterBy = {}, sortBy, pageIdx) {
@@ -42,6 +43,10 @@ function remove(toyId) {
 function save(toy) {
   const method = toy._id ? 'put' : 'post'
   return httpService[method](BASE_URL, toy)
+}
+
+function addMessage(toyId, message) {
+  return httpService.put(`${BASE_URL}${toyId}/messages`, { message })
 }
 
 function getDefaultFilter() {

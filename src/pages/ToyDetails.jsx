@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Loader } from '../cmps/Loader'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { showErrorMsg } from '../services/event-bus.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { toyService } from '../services/toy.service'
+import { userService } from '../services/user.service'
 
 export function ToyDetails() {
   const [toy, setToy] = useState(null)
+  const [message, setMessage] = useState('')
+  const [loggedInUser, setLoggedInUser] = useState(null)
   const { toyId } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     loadToy()
+    loadLoggedInUser()
   }, [toyId])
 
   function loadToy() {
@@ -20,6 +24,51 @@ export function ToyDetails() {
         console.log('Had issues in toy details', err)
         showErrorMsg('Cannot load toy')
         navigate('/toy')
+      })
+  }
+
+  function loadLoggedInUser() {
+    userService.getLoggedInUser()
+      .then(user => setLoggedInUser(user))
+      .catch(err => {
+        console.log('Failed to fetch logged-in user', err)
+        showErrorMsg('Cannot fetch user')
+      })
+  }
+
+  function handleChange(event) {
+    setMessage(event.target.value)
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    if (!message.trim()) {
+      showErrorMsg('Message cannot be empty')
+      return
+    }
+    if (!loggedInUser) {
+      showErrorMsg('You must be logged in to add a message')
+      return
+    }
+
+    const newMessage = {
+      id: Date.now(), // Simple unique id
+      txt: message,
+      by: {
+        _id: loggedInUser._id,
+        fullname: loggedInUser.fullname
+      }
+    }
+
+    toyService.addMessage(toyId, newMessage)
+      .then(updatedToy => {
+        setToy(updatedToy)
+        setMessage('')
+        showSuccessMsg('Message added successfully')
+      })
+      .catch(err => {
+        console.log('Failed to add message', err)
+        showErrorMsg('Failed to add message')
       })
   }
 
@@ -55,6 +104,17 @@ export function ToyDetails() {
           <p>No messages</p>
         )}
       </section>
+
+      <form onSubmit={handleSubmit} className="message-form">
+        <textarea
+          name="message"
+          value={message}
+          onChange={handleChange}
+          placeholder="Add a message"
+          required
+        />
+        <button type="submit">Add Message</button>
+      </form>
 
       <button>
         <Link to="/toy">Back</Link>
