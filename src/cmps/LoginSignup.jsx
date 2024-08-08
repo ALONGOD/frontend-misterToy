@@ -1,63 +1,80 @@
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { userService } from '../services/user.service.js'
-import React, { useState } from "react";
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
+import { userService } from '../services/user.service.js';
+import React, { useState, useEffect } from "react";
 
 export function LoginSignup() {
 
-    const [isSignup, setIsSignUp] = useState(false)
-    const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
-    const [error, setError] = useState('')
-    const [loggedInUser, setLoggedInUser] = useState(null)
+    const [isSignup, setIsSignUp] = useState(false);
+    const [credentials, setCredentials] = useState(userService.getEmptyCredentials());
+    const [error, setError] = useState('');
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
+    useEffect(() => {
+        async function fetchUser() {
+            const user = await userService.getLoggedInUser();
+            if (user) {
+                setLoggedInUser(user);
+            }
+        }
+
+        fetchUser();
+    }, []);
 
     function handleChange({ target }) {
-        const { name: field, value } = target
-        setCredentials(prevCreds => ({ ...prevCreds, [field]: value }))
+        const { name: field, value } = target;
+        setCredentials(prevCreds => ({ ...prevCreds, [field]: value }));
     }
 
     async function handleSubmit(ev) {
-        ev.preventDefault()
+        ev.preventDefault();
         try {
-            await onLogin(credentials)
-            setError('') // Clear any previous error message
+            await onLogin(credentials);
+            setError(''); // Clear any previous error message
         } catch (err) {
-            setError('Oops, something went wrong. Please try again.')
+            setError('Oops, something went wrong. Please try again.');
         }
     }
 
     async function onLogin(credentials) {
         if (isSignup) {
-            await signup(credentials)
+            await signup(credentials);
         } else {
-            await login(credentials)
+            await login(credentials);
         }
     }
 
     async function login(credentials) {
         try {
-            const user = await userService.login(credentials)
-            setUser(user)
-            showSuccessMsg('Logged in successfully')
+            const user = await userService.login(credentials);
+            setUser(user);
+            showSuccessMsg('Logged in successfully');
         } catch (err) {
-            showErrorMsg('Login failed. Please try again.')
-            throw err // Re-throw error to be caught by handleSubmit
+            showErrorMsg('Login failed. Please try again.');
+            throw err; // Re-throw error to be caught by handleSubmit
         }
     }
 
     async function signup(credentials) {
         try {
-            const user = await userService.signup(credentials)
-            setUser(user)
-            showSuccessMsg('Signed up successfully')
+            const user = await userService.signup(credentials);
+            setUser(user);
+            showSuccessMsg('Signed up successfully');
         } catch (err) {
-            showErrorMsg('Signup failed. Please try again.')
-            throw err // Re-throw error to be caught by handleSubmit
+            showErrorMsg('Signup failed. Please try again.');
+            throw err; // Re-throw error to be caught by handleSubmit
         }
     }
 
     function setUser(user) {
-        setLoggedInUser(user)
-        sessionStorage.setItem('loggedInUser', JSON.stringify(user))
+        setLoggedInUser(user);
+        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
         // Perform any other necessary state updates or actions here
+    }
+
+    async function logout() {
+        await userService.logout();
+        setLoggedInUser(null);
+        showSuccessMsg('Logged out successfully');
     }
 
     return (
@@ -65,6 +82,7 @@ export function LoginSignup() {
             {loggedInUser ? (
                 <div>
                     <h2>Welcome, {loggedInUser.username}!</h2>
+                    <button onClick={logout}>Logout</button>
                 </div>
             ) : (
                 <>
@@ -102,8 +120,8 @@ export function LoginSignup() {
 
                     <div className="btns">
                         <a href="#" onClick={(ev) => {
-                            ev.preventDefault()
-                            setIsSignUp(!isSignup)
+                            ev.preventDefault();
+                            setIsSignUp(!isSignup);
                         }}>
                             {isSignup ?
                                 'Already a member? Login' :
@@ -114,5 +132,5 @@ export function LoginSignup() {
                 </>
             )}
         </div >
-    )
+    );
 }

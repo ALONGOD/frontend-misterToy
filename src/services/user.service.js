@@ -68,12 +68,25 @@ function signup(user) {
     return httpService.post(AUTH_URL + 'signup', user)
 }
 
-function logout() {
-    return httpService.post(AUTH_URL + 'logout')
+async function logout() {
+    try {
+        await httpService.post(AUTH_URL + 'logout');
+        sessionStorage.removeItem('loggedInUser');
+        clearCookies();
+    } catch (error) {
+        console.error('Error during logout:', error);
+    }
 }
 
-function getLoggedInUser() {
-    return httpService.get(AUTH_URL + 'me')
+async function getLoggedInUser() {
+    try {
+        // Simulate fetching user from sessionStorage
+        const user = sessionStorage.getItem('loggedInUser');
+        return user ? JSON.parse(user) : null;
+    } catch (error) {
+        console.error('Error fetching logged-in user:', error);
+        return null;
+    }
 }
 
 function getEmptyCredentials() {
