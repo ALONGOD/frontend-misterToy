@@ -46,7 +46,8 @@ function save(toy) {
 }
 
 function addMessage(toyId, message) {
-  return httpService.put(`${BASE_URL}${toyId}/msg`, { message })
+  console.log(toyId, message)
+  return httpService.post(`${BASE_URL}${toyId}/msg`, { message })
 }
 
 function getDefaultFilter() {
