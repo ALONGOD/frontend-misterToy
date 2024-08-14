@@ -126,7 +126,7 @@ export function ToyDetails() {
         <button type="submit">Add Message</button>
       </form>
       <ToyReview toy={toy} />
-      <ChatRoom />
+      <ChatRoom toyId={toyId} />
 
       <button>
         <Link to="/toy">Back</Link>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { socketService } from '../services/socket.service.js';
+import { socketService, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_SEND_MSG, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service.js';
 import { userService } from '../services/user.service.js';
 import { showErrorMsg } from '../services/event-bus.service.js';
 
@@ -15,6 +15,7 @@ export function ChatRoom({ toyId }) {
                 const user = await userService.getLoggedInUser();
                 if (user) {
                     setLoggedInUser(user);
+                    console.log('Logged in user loaded:', user);
                 } else {
                     showErrorMsg('Failed to load user, please log in.');
                 }
@@ -28,20 +29,25 @@ export function ChatRoom({ toyId }) {
     }, []);
 
     useEffect(() => {
+        if (!loggedInUser) return;
+
         // Join the specific chat room for the toy
-        socketService.emit('join-room', toyId);
+        socketService.emit(SOCKET_EMIT_SET_TOPIC, toyId);
+        console.log('Joined room:', toyId);
 
         // Listen for incoming messages
-        socketService.on('message-received', (message) => {
+        socketService.on(SOCKET_EVENT_ADD_MSG, (message) => {
+            console.log('Message received:', message);
             setMessages((prevMessages) => [...prevMessages, message]);
         });
 
         // Clean up the effect when the component unmounts
         return () => {
-            socketService.off('message-received');
+            socketService.off(SOCKET_EVENT_ADD_MSG);
             socketService.emit('leave-room', toyId);
+            console.log('Left room:', toyId);
         };
-    }, [toyId]);
+    }, [toyId, loggedInUser]);
 
     function handleSendMessage() {
         if (!newMessage.trim()) return;
@@ -57,9 +63,10 @@ export function ChatRoom({ toyId }) {
         };
 
         // Emit the message to the server
-        socketService.emit('send-message', message);
+        console.log('Sending message:', message);
+        socketService.emit(SOCKET_EMIT_SEND_MSG, message);
 
-        // Optionally add the message to the UI instantly (optimistic UI)
+        // Add the message to the UI instantly (optimistic UI)
         setMessages((prevMessages) => [...prevMessages, message]);
         setNewMessage('');
     }
