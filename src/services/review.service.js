@@ -1,4 +1,4 @@
-import { httpService } from '../http.service'
+import { httpService } from './http.service'
 
 export const reviewService = {
 	add,
@@ -7,6 +7,8 @@ export const reviewService = {
 }
 
 function query(filterBy) {
+	console.log(filterBy);
+
 	var queryStr = !filterBy ? '' : `?name=${filterBy.name}&sort=anaAref`
 	return httpService.get(`review${queryStr}`)
 }
