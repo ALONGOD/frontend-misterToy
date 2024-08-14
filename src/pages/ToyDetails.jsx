@@ -5,6 +5,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 import { toyService } from '../services/toy.service';
 import { userService } from '../services/user.service';
 import { ToyReview } from '../cmps/ToyReview.jsx'
+import { ChatRoom } from '../cmps/ChatRoom.jsx'
 
 export function ToyDetails() {
   const [toy, setToy] = useState(null);
@@ -125,6 +126,7 @@ export function ToyDetails() {
         <button type="submit">Add Message</button>
       </form>
       <ToyReview toy={toy} />
+      <ChatRoom />
 
       <button>
         <Link to="/toy">Back</Link>
