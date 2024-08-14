@@ -66,8 +66,7 @@ export function ChatRoom({ toyId }) {
         console.log('Sending message:', message);
         socketService.emit(SOCKET_EMIT_SEND_MSG, message);
 
-        // Add the message to the UI instantly (optimistic UI)
-        setMessages((prevMessages) => [...prevMessages, message]);
+        // Clear the input field after sending the message
         setNewMessage('');
     }
 
