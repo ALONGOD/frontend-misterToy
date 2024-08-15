@@ -1,6 +1,8 @@
 import io from 'socket.io-client'
 import { userService } from './user.service.js'
 
+export const SOCKET_EVENT_USER_TYPING = 'user-typing';
+export const SOCKET_EMIT_USER_TYPING = 'user-typing';
 export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
 export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
